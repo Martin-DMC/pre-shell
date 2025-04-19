@@ -4,5 +4,7 @@
 #define PRESHELL_H
 
 ssize_t _getline(char **ptrline, size_t *size, FILE *stream);
+char **tokenised(char *comando);
+
 
 #endif
