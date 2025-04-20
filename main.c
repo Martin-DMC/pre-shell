@@ -3,6 +3,8 @@
 #include <string.h>
 #include "preshell.h"
 
+extern char **environ;
+
 int main()
 {
 	while (1)
@@ -24,11 +26,16 @@ int main()
 			break;
 
 		tokens = tokenised(comando);
-		printf("tokenizado:\n");
-		for (j = 0; tokens[j] != NULL; j++)
-			printf("%s\n", tokens[j]);
-
+		if (tokens != NULL)
+		{
+			proceso_hijo(tokens);
+			for (j = 0; tokens[j] != NULL; j++)
+				free(tokens[j]);
+			free(tokens);
+			tokens = NULL;
+		}
 		free(comando);
+		comando = NULL;
 	}
 	return (0);
 }
