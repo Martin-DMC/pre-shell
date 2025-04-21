@@ -7,6 +7,6 @@ ssize_t _getline(char **ptrline, size_t *size, FILE *stream);
 char **tokenised(char *comando);
 int ejecucion(char **tokens);
 int proceso_hijo(char **tokens);
-
+char **_getenv(void);
 
 #endif

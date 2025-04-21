@@ -15,37 +15,39 @@ char *verificar_ruta(char *comando)
 }
 char *generar_ruta(char *comando)
 {
-	char *copia = NULL, *directorio = NULL, *ruta_final = NULL;
-	char *path_env = getenv("PATH");
+	char *ruta_final = NULL;
+	char **path_dir = _getenv();
+	int i, j;
 
-	if (path_env == NULL)
-		return (NULL);
 
-	copia = strdup(path_env);
-	if (copia == NULL)
+	if (path_dir == NULL)
 	{
-		perror("fallo dup\n");
+		perror("fallo _getenv");
 		return (NULL);
 	}
-	directorio = strtok(copia, ":");
-	while (directorio != NULL)
+	for (i = 0; path_dir[i] != NULL; i++)
 	{
-		if (asprintf(&ruta_final, "%s/%s", directorio, comando) == -1)
+		if (asprintf(&ruta_final, "%s/%s", path_dir[i], comando) == -1)
 		{
 			perror("fallo asprintf\n");
-			free(copia);
+			for (j = 0; path_dir[j] != NULL; j++)
+				free(path_dir[i]);
+			free(path_dir);
 			return (NULL);
 		}
 		if (access(ruta_final, X_OK) == 0)
 		{
-			free(copia);
+			for (j = 0; path_dir != NULL; j++)
+				free(path_dir[i]);
+			free(path_dir);
 			return (ruta_final);
 		}
 		free(ruta_final);
 		ruta_final = NULL;
-		directorio = strtok(NULL, ":");
 	}
-	free(copia);
+	for (j = 0; path_dir[j] != NULL; j++)
+		free(path_dir[j]);
+	free(path_dir);
 	return (NULL);
 }
 char *buscar_comando(char *comando)
@@ -61,7 +63,7 @@ int ejecucion(char **tokens)
 
 	if (ruta_comando == NULL)
 	{
-		fprintf(stderr, "%s: command not found\n", tokens[0]);
+		fprintf(stderr, "preshell: 1: %s: not found\n", tokens[0]);
 		return (-1);
 	}
 	if (execve(ruta_comando, tokens, environ) == -1)

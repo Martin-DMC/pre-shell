@@ -7,14 +7,14 @@ extern char **environ;
 
 int main()
 {
+	char *comando = NULL;
+	size_t largo = 0;
+	ssize_t resultado;
+	char **tokens = NULL;
+	int j;
+
 	while (1)
 	{
-		char *comando = NULL;
-		size_t largo = 0;
-		ssize_t resultado;
-		char **tokens = NULL;
-		int i = 0, j;
-
 		printf("$ ");
 
 		resultado = getline(&comando, &largo, stdin);
@@ -37,5 +37,6 @@ int main()
 		free(comando);
 		comando = NULL;
 	}
+	free(comando);
 	return (0);
 }
