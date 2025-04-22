@@ -104,5 +104,6 @@ char **_getenv(void)
 	}
 	copia[i] = '\0';
 	directorios = tokens(copia);
+	free(copia);
 	return (directorios);
 }
