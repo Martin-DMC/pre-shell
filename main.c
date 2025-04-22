@@ -34,6 +34,9 @@ int main()
 			free(tokens);
 			tokens = NULL;
 		}
+		for (j = 0; tokens[j] != NULL; j++)
+			free(tokens[j]);
+		free(tokens);
 		free(comando);
 		comando = NULL;
 	}
