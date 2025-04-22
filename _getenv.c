@@ -63,6 +63,7 @@ char **tokens(char *cadena)
 		i++;
 	}
 	tokens[i] = NULL;
+	free(token);
 	free(copia);
 	return (tokens);
 }

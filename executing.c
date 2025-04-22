@@ -31,14 +31,14 @@ char *generar_ruta(char *comando)
 		{
 			perror("fallo asprintf\n");
 			for (j = 0; path_dir[j] != NULL; j++)
-				free(path_dir[i]);
+				free(path_dir[j]);
 			free(path_dir);
 			return (NULL);
 		}
 		if (access(ruta_final, X_OK) == 0)
 		{
-			for (j = 0; path_dir != NULL; j++)
-				free(path_dir[i]);
+			for (j = 0; path_dir[j] != NULL; j++)
+				free(path_dir[j]);
 			free(path_dir);
 			return (ruta_final);
 		}
