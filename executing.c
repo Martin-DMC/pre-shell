@@ -27,7 +27,7 @@ char *generar_ruta(char *comando)
 	}
 	for (i = 0; path_dir[i] != NULL; i++)
 	{
-		if (asprintf(&ruta_final, "%s/%s", path_dir[i], comando) == -1)
+		if ((ruta_final = _asprintf(path_dir[i], comando)) == NULL)
 		{
 			perror("fallo asprintf\n");
 			for (j = 0; path_dir[j] != NULL; j++)
