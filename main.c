@@ -20,7 +20,7 @@ int main()
 		resultado = getline(&comando, &largo, stdin);
 		if (resultado == -1)
 			break;
-		if (comando[resultado - 1] == '\n') 
+		if (comando[resultado - 1] == '\n')
 			comando[resultado - 1] = '\0';
 		if (strcmp(comando, "exit") == 0)
 			break;
@@ -37,6 +37,7 @@ int main()
 		free(comando);
 		comando = NULL;
 	}
+	printf("\n");
 	free(comando);
 	return (0);
 }
