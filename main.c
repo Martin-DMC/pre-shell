@@ -4,7 +4,14 @@
 #include "preshell.h"
 
 extern char **environ;
+void liberar_tokens(char **tokens)
+{
+	int j;
 
+	for (j = 0; tokens[j] != NULL; j++)
+		free(tokens[j]);
+	free(tokens);
+}
 int main()
 {
 	char *comando = NULL;
@@ -16,10 +23,12 @@ int main()
 	while (1)
 	{
 		printf("$ ");
-
 		resultado = getline(&comando, &largo, stdin);
 		if (resultado == -1)
+		{
+			printf("\n");
 			break;
+		}
 		if (comando[resultado - 1] == '\n')
 			comando[resultado - 1] = '\0';
 		if (strcmp(comando, "exit") == 0)
@@ -29,18 +38,18 @@ int main()
 		if (tokens != NULL)
 		{
 			proceso_hijo(tokens);
-			for (j = 0; tokens[j] != NULL; j++)
-				free(tokens[j]);
-			free(tokens);
+			liberar_tokens(tokens);
 			tokens = NULL;
 		}
-		for (j = 0; tokens[j] != NULL; j++)
-			free(tokens[j]);
-		free(tokens);
-		free(comando);
-		comando = NULL;
+		else
+		{
+			liberar_tokens(tokens);
+			tokens = NULL;
+		}
 	}
-	printf("\n");
-	free(comando);
+	if (tokens != NULL)
+		liberar_tokens(tokens);
+	if (comando != NULL)
+		free(comando);
 	return (0);
 }

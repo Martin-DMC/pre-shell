@@ -11,7 +11,6 @@ int conteo_tokens(char *comando)
 	if (copia == NULL)
 	{
 		perror("fallo dup");
-		free(comando);
 		return (1);
 	}
 	token = strtok(copia, " ");
@@ -34,14 +33,12 @@ char **tokenised(char *comando)
 	if (tokens == NULL)
 	{
 		perror("malloc fallo");
-		free(comando);
 		return (NULL);
 	}
 	copia = strdup(comando);
 	if (copia == NULL)
 	{
 		perror("fallo dup");
-		free(comando);
 		free(tokens);
 		return (NULL);
 	}
@@ -56,7 +53,6 @@ char **tokenised(char *comando)
 				free(tokens[j]);
 			free(tokens);
 			free(copia);
-			free(comando);
 			return (NULL);
 		}
 		token = strtok(NULL, " ");
